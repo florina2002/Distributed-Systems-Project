@@ -1,0 +1,65 @@
+version: "3"
+
+services:
+  app-user:
+    image: backend:latest
+    ports:
+      - "8080:8080"
+    build:
+      context: spring-demo-user
+      dockerfile: Dockerfile
+    container_name: app-user
+    depends_on:
+      - db-user
+
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-user:5432/db-user
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  app-device:
+    image: backend2:latest
+    ports:
+      - "8081:8081"
+    build:
+      context: spring-demo-device
+      dockerfile: Dockerfile
+    container_name: app-device
+    depends_on:
+      - db-device
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-device:5432/db-device
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+
+  frontend:
+    image: frontend:latest
+    ports:
+      - "3000:3000"
+    build:
+      context: react-demo
+      dockerfile: Dockerfile
+    container_name: frontend
+
+  db-user:
+    image: 'postgres:13.1-alpine'
+    container_name: db-user
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=db-user
+
+  db-device:
+    image: 'postgres:13.1-alpine'
+    container_name: db-device
+    ports:
+      - "5433:5433"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=db-device

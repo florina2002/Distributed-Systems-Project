@@ -1,0 +1,124 @@
+version: "3"
+
+services:
+  app-user:
+    image: backend:latest
+    ports:
+      - "8083"
+    build:
+      context: spring-demo-user
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 3
+    depends_on:
+      - db-user
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-user:5432/db-user
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-user.rule=Host(`app-user.localhost`)"
+      - "traefik.http.services.app-user.loadbalancer.server.port=8083"
+  
+  app-device:
+    image: backend2:latest
+    ports:
+      - "8081"
+    build:
+      context: spring-demo-device
+      dockerfile: Dockerfile
+    depends_on:
+      - db-device
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-device:5432/db-device
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-device.rule=Host(`app-device.localhost`)"
+      - "traefik.http.services.app-device.loadbalancer.server.port=8081"
+  
+  app-measurement:
+    image: backend3:latest
+    ports:
+      - "8084"
+    build:
+      context: Consumer
+      dockerfile: Dockerfile
+    depends_on:
+      - db-measurement
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-measurement:5432/db-measurement
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.routers.app-measurement.rule=Host(`app-measurement.localhost`)"
+      - "traefik.http.services.app-measurement.loadbalancer.server.port=8084"
+
+  frontend:
+    image: frontend:latest
+    ports:
+      - "3000"
+    build:
+      context: react-demo
+      dockerfile: Dockerfile
+    container_name: frontend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`frontend.localhost`)"
+      - "traefik.http.services.frontend.loadbalancer.server.port=3000"
+
+  db-user:
+    image: 'postgres:13.1-alpine'
+    container_name: db-user
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=db-user
+  
+  db-device:
+    image: 'postgres:13.1-alpine'
+    container_name: db-device
+    ports:
+      - "5433:5433"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=db-device
+  
+  db-measurement:
+    image: 'postgres:13.1-alpine'
+    container_name: db-measurement
+    ports:
+      - "5434:5434"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=db-measurement
+  
+  reverse-proxy:
+    image: 'traefik:v2.10'
+    container_name: traefik
+    ports:
+      - "80:80"
+      - "8080:8080"
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --accesslog=true
+      - --accesslog.filepath=/var/log/traefik/access.log
+      - --entrypoints.web.address=:80
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+
+
+
+

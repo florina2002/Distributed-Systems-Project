@@ -1,0 +1,48 @@
+.App {
+  background-image: url("../energy-background.png");
+  min-height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.user-table{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+  height: 70vh;
+}
+
+/* Navigation styles */
+nav {
+  width: 100%; /* Full width of the container */
+  padding: 10px 0; /* Padding on top and bottom */
+  background-color: rgba(255, 255, 255, 0.85); /* Background for the nav */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.nav-list {
+  display: flex; /* Use flexbox for horizontal layout */
+  justify-content: center; /* Center the list */
+  list-style-type: none; /* Remove default list styles */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+}
+
+.nav-list li {
+  margin: 0 15px; /* Space between navigation items */
+}
+
+.nav-list a {
+  text-decoration: none; /* Remove underline from links */
+  color: #4CAF50; /* Green color for links */
+  font-size: 16px; /* Font size for links */
+}
+
+.nav-list a:hover {
+  text-decoration: underline; /* Underline on hover for links */
+  color: #45a049; /* Darker green on hover */
+}
+

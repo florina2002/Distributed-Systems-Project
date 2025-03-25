@@ -1,0 +1,6 @@
+com\example\consumer\IEnergyConsumptionRepository.class
+com\example\consumer\RabbitMQApplication.class
+com\example\consumer\RabbitMQConfig.class
+com\example\consumer\DeviceData.class
+com\example\consumer\RabbitMQConsumer.class
+com\example\consumer\EnergyConsumption.class

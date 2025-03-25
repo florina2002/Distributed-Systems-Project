@@ -1,0 +1,96 @@
+/* AdminPage.css */
+
+.admin-container {
+    background-image: url("../energy-background.png"); /* Add the background image */
+    background-size: cover; /* Ensure the image covers the entire container */
+    background-position: center; /* Center the background image */
+    min-height: 100vh; /* Full height for the admin area */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.admin-header {
+    font-size: 24px;
+    color: #fff; /* Change text color to white for better contrast */
+    margin-bottom: 20px;
+}
+
+.admin-buttons {
+    margin-bottom: 30px; /* Space between buttons and content */
+}
+
+.admin-button {
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px; /* Space between buttons */
+    transition: background-color 0.3s;
+}
+
+.admin-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.table-container {
+    width: 100%;
+    max-width: 800px; /* Limit the width of the table */
+    margin: 0 auto; /* Center the table */
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse; /* Collapse table borders */
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Add bottom border for rows */
+}
+
+.table th {
+    background-color: #f2f2f2; /* Light gray background for headers */
+    color: #333;
+}
+
+.table tr:hover {
+    background-color: #f5f5f5; /* Highlight row on hover */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-user-button {
+    padding: 10px;
+    background-color: #2196F3; /* Blue button for add user */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px; /* Space above the button */
+    transition: background-color 0.3s;
+}
+
+.add-user-button:hover {
+    background-color: #1976D2; /* Darker blue on hover */
+}
